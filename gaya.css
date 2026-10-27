@@ -28,7 +28,7 @@ p,ul,ol{margin:0 0 1em}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:14px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:16px;font-family:inherit}
 .btn.utama{background:var(--acc);color:var(--on-acc)}
 .btn.kedua{background:var(--surface);color:var(--fg);box-shadow:inset 0 0 0 1px var(--line)}
-.btn[aria-disabled=true]{opacity:.6;pointer-events:none}
+.btn[aria-disabled=true],.btn:disabled{opacity:.6;pointer-events:none}
 .ponsel{display:flex;justify-content:center;gap:14px}
 .ponsel img{width:min(46%,230px);border-radius:22px;box-shadow:0 0 0 1px var(--line),0 18px 40px rgba(0,0,0,.18)}
 .ponsel img:nth-child(2){margin-top:34px}

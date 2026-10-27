@@ -21,6 +21,10 @@
 <section style="padding-top:36px"><div class="baca">
   <h1>Terima kasih</h1>
   <p class="lead">Pembayaran Anda sedang kami proses. Kode lisensi akan dikirim ke email yang Anda isi saat memesan.</p>
+  <div id="infoPesanan" class="kartu" hidden>
+    <p style="margin:0">Nomor pesanan: <b id="nomor"></b></p>
+    <p id="statusBayar" role="status" aria-live="polite" style="margin:.6em 0 0" hidden></p>
+  </div>
   <ol class="langkah">
     <li><b>Cek email Anda</b> (juga folder Spam/Promosi). Kode biasanya tiba dalam beberapa menit.</li>
     <li><b>Pasang Bedah Dompet</b> di HP atau laptop mengikuti panduan di email.</li>
@@ -30,6 +34,8 @@
 </div></section>
 
 </main>
+<script src="/beli/pesan.js"></script>
+<script>siapkanSelesai();</script>
 <footer class="bawah"><div class="wrap">
   <div><b>Luzware Digi Goods</b><br>Usaha perorangan di Kota Tasikmalaya, Indonesia.<br>Produk digital untuk keuangan keluarga.<br><span class="tipis">&copy; 2026 Luzware Digi Goods</span></div>
   <div><b>Informasi</b><ul>

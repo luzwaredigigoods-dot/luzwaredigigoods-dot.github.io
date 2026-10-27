@@ -26,6 +26,20 @@
     <p class="muted">Pembayaran memakai Midtrans (transfer bank, e-wallet, QRIS, dan lainnya). Kode lisensi akan dikirim otomatis ke email setelah pembayaran berhasil.</p>
     <p class="muted">Ingin dikabari saat dibuka? Kirim pesan ke <a href="https://wa.me/6285121286052?text=Halo%2C%20saya%20ingin%20dikabari%20saat%20Bedah%20Dompet%20dibuka">WhatsApp kami</a> atau <a href="mailto:luzwaredigigoods@gmail.com">email</a>.</p>
   </div>
+  <form id="formBeli" class="kartu" hidden novalidate>
+    <p id="modeUji" class="cat" hidden><b>Mode uji coba (Sandbox).</b> Pembayaran tidak sungguhan; pakai simulator Midtrans.</p>
+    <span class="label">Aplikasi</span>
+    <div class="harga">Rp79.000 <small>sekali bayar</small></div>
+    <label for="nama">Nama</label>
+    <input id="nama" name="nama" autocomplete="name" maxlength="60" required>
+    <label for="email">Email untuk menerima kode lisensi</label>
+    <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="100" required>
+    <p class="muted tipis" style="margin-top:6px">Sebaiknya email akun Google yang akan dipakai membuka Bedah Dompet.</p>
+    <label style="display:flex;gap:10px;align-items:flex-start;font-weight:400"><input id="setuju" type="checkbox" style="width:22px;min-height:22px;margin-top:3px;flex:none"> <span>Saya menyetujui <a href="/syarat-ketentuan/">Syarat &amp; Ketentuan</a> dan <a href="/kebijakan-privasi/">Kebijakan Privasi</a>.</span></label>
+    <p id="salah" class="cat" role="alert" hidden></p>
+    <div class="tombol"><button class="btn utama" id="tombolBayar" type="submit">Lanjut ke pembayaran</button></div>
+    <p class="muted tipis">Anda akan diarahkan ke halaman pembayaran Midtrans yang aman: transfer bank, e-wallet, QRIS, dan lainnya.</p>
+  </form>
   <h2>Yang Anda dapat</h2>
   <ul>
     <li><b>Aplikasi Bedah Dompet</b>, Rp79.000, sekali bayar.</li>
@@ -36,6 +50,8 @@
 </div></section>
 
 </main>
+<script src="/beli/pesan.js"></script>
+<script>siapkanBeli();</script>
 <footer class="bawah"><div class="wrap">
   <div><b>Luzware Digi Goods</b><br>Usaha perorangan di Kota Tasikmalaya, Indonesia.<br>Produk digital untuk keuangan keluarga.<br><span class="tipis">&copy; 2026 Luzware Digi Goods</span></div>
   <div><b>Informasi</b><ul>
