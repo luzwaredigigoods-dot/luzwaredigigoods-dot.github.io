@@ -2,7 +2,7 @@
    ALAMAT_SERVER = alamat /exec server lisensi; diisi oleh skrip/isi-situs.py --server.
    Selama kosong, atau server masih mode uji (Sandbox), pembeli melihat "Segera dibuka".
    Untuk mencoba Sandbox: buka /beli/?uji=1 */
-var ALAMAT_SERVER = '';
+var ALAMAT_SERVER = 'https://script.google.com/macros/s/AKfycbwf1m9xaK5L8L_U4GZcI3FZz5gx-sG6zcG6zHJMsHiA79jZzZL3eDo2xAMCqVyfpRgd/exec';
 
 function panggilServer(isi) {
   /* text/plain agar tidak ada preflight CORS; Apps Script membalas JSON */
