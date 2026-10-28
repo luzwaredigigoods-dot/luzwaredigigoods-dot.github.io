@@ -62,17 +62,19 @@
       <a class="btn utama" href="/beli/">Beli aplikasi</a>
     </div>
     <div class="kartu paket">
-      <span class="label">Segera hadir</span>
+      <span class="label" data-segera="premium_bulan">Segera hadir</span>
       <h3>Premium</h3>
       <div class="harga">Rp15.000 <small>/ bulan</small></div>
       <div class="muted" style="margin-bottom:8px">atau Rp129.000 / tahun</div>
       <ul><li>Scan struk belanja otomatis</li><li>Analisis keuangan dengan AI</li><li>Kuota per keluarga tiap bulan: 100 scan struk dan 10 analisis</li><li>Diperpanjang manual, tidak ada tagihan otomatis</li></ul>
+      <a class="btn kedua" href="/beli/?paket=premium_bulan" data-jual="premium_bulan" hidden>Berlangganan Premium</a>
     </div>
     <div class="kartu paket">
-      <span class="label">Segera hadir</span>
+      <span class="label" data-segera="lengkap">Segera hadir</span>
       <h3>Bedah Dompet Lengkap</h3>
       <div class="harga">Rp249.000 <small>sekali bayar</small></div>
       <ul><li>Aplikasi + Premium selamanya</li><li>Kuota Premium yang sama (pemakaian wajar)</li></ul>
+      <a class="btn kedua" href="/beli/?paket=lengkap" data-jual="lengkap" hidden>Beli Lengkap</a>
     </div>
   </div>
   <p class="cat" style="margin-top:16px">Fitur Premium memakai layanan AI. Hanya data yang Anda pilih (foto struk, atau ringkasan angka tanpa nama dan catatan) yang dikirim, dan hanya saat Anda memakainya. Rinciannya ada di <a href="/kebijakan-privasi/#premium">Kebijakan Privasi</a>.</p>
@@ -98,6 +100,8 @@
 </div></section>
 
 </main>
+<script src="/beli/pesan.js"></script>
+<script>siapkanProduk();</script>
 <footer class="bawah"><div class="wrap">
   <div><b>Luzware Digi Goods</b><br>Usaha perorangan di Kota Tasikmalaya, Indonesia.<br>Produk digital untuk keuangan keluarga.<br><span class="tipis">&copy; 2026 Luzware Digi Goods</span></div>
   <div><b>Informasi</b><ul>
