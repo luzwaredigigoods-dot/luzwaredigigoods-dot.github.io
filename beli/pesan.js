@@ -1,8 +1,15 @@
-/* Pembelian Bedah Dompet lewat Midtrans Snap (dipakai /beli/ dan /beli/selesai/).
+/* Pembelian Bedah Dompet lewat Midtrans Snap (dipakai /beli/, /beli/selesai/, dan halaman produk).
    ALAMAT_SERVER = alamat /exec server lisensi; diisi oleh skrip/isi-situs.py --server.
    Selama kosong, atau server masih mode uji (Sandbox), pembeli melihat "Segera dibuka".
-   Untuk mencoba Sandbox: buka /beli/?uji=1 */
+   Untuk mencoba Sandbox: buka /beli/?uji=1. Paket yang bisa dibeli (dan harganya) ditentukan server. */
 var ALAMAT_SERVER = 'https://script.google.com/macros/s/AKfycbwf1m9xaK5L8L_U4GZcI3FZz5gx-sG6zcG6zHJMsHiA79jZzZL3eDo2xAMCqVyfpRgd/exec';
+
+var NAMA_PAKET = {
+  aplikasi: { judul: 'Aplikasi', ket: 'sekali bayar' },
+  lengkap: { judul: 'Bedah Dompet Lengkap', ket: 'sekali bayar · aplikasi + Premium selamanya' },
+  premium_bulan: { judul: 'Premium 1 bulan', ket: 'untuk keluarga yang sudah punya kode lisensi', kode: true },
+  premium_tahun: { judul: 'Premium 12 bulan', ket: 'untuk keluarga yang sudah punya kode lisensi', kode: true }
+};
 
 function panggilServer(isi) {
   /* text/plain agar tidak ada preflight CORS; Apps Script membalas JSON */
@@ -14,13 +21,37 @@ function pesanAwam(e) {
   return e && e.dariServer ? e.message : 'Koneksi internet terputus atau server sedang sibuk. Coba lagi sebentar.';
 }
 function $(id) { return document.getElementById(id); }
+function rupiah(n) { return 'Rp' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+function parameter(nama) { return new URLSearchParams(location.search).get(nama) || ''; }
+function infoJual() {
+  if (!ALAMAT_SERVER) return Promise.reject(new Error('belum'));
+  return panggilServer({ aksi: 'info' }).then(function (info) {
+    if (!info.buka || (info.sandbox && !/[?&]uji=1\b/.test(location.search))) throw new Error('belum');
+    return info;
+  });
+}
 
 /* Halaman /beli/ */
 function siapkanBeli() {
-  var uji = /[?&]uji=1\b/.test(location.search);
-  if (!ALAMAT_SERVER) return;
-  panggilServer({ aksi: 'info' }).then(function (info) {
-    if (!info.buka || (info.sandbox && !uji)) return;
+  var paket = 'aplikasi';
+  function pilih(p) {
+    paket = p;
+    Array.prototype.forEach.call(document.querySelectorAll('#pilihPaket input'), function (r) { r.checked = r.value === p; });
+    $('kolomKode').hidden = !NAMA_PAKET[p].kode;
+    $('labelEmail').textContent = NAMA_PAKET[p].kode ? 'Email untuk menerima rincian pembelian' : 'Email untuk menerima kode lisensi';
+  }
+  infoJual().then(function (info) {
+    var daftar = (info.paket || []).filter(function (x) { return NAMA_PAKET[x.paket]; });
+    if (!daftar.length) return;
+    $('pilihPaket').innerHTML = daftar.map(function (x) {
+      var n = NAMA_PAKET[x.paket];
+      return '<label class="opsi"><input type="radio" name="paket" value="' + x.paket + '"><span><b>' + n.judul + '</b> · ' + rupiah(x.harga) +
+        '<br><span class="muted tipis">' + n.ket + '</span></span></label>';
+    }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('#pilihPaket input'), function (r) { r.addEventListener('change', function () { pilih(r.value); }); });
+    var awal = parameter('paket');
+    pilih(daftar.some(function (x) { return x.paket === awal; }) ? awal : daftar[0].paket);
+    if (parameter('kode')) $('kode').value = parameter('kode').toUpperCase();
     $('belum').hidden = true;
     $('formBeli').hidden = false;
     $('modeUji').hidden = !info.sandbox;
@@ -31,8 +62,13 @@ function siapkanBeli() {
     var tombol = $('tombolBayar'), salah = $('salah');
     salah.hidden = true;
     if (!$('setuju').checked) { salah.textContent = 'Centang persetujuan Syarat & Ketentuan dulu.'; salah.hidden = false; return; }
+    var isi = { aksi: 'pesan', paket: paket, nama: $('nama').value, email: $('email').value };
+    if (NAMA_PAKET[paket].kode) {
+      isi.kode = $('kode').value.trim().toUpperCase();
+      if (!/^BD-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(isi.kode)) { salah.textContent = 'Isi kode lisensi keluarga Anda (contoh BD-ABCD-EF23).'; salah.hidden = false; return; }
+    }
     tombol.disabled = true; tombol.textContent = 'Menyiapkan pembayaran…';
-    panggilServer({ aksi: 'pesan', paket: 'aplikasi', nama: $('nama').value, email: $('email').value })
+    panggilServer(isi)
       .then(function (j) { location.href = j.redirect_url; })
       .catch(function (e) {
         salah.textContent = pesanAwam(e); salah.hidden = false;
@@ -41,16 +77,30 @@ function siapkanBeli() {
   });
 }
 
+/* Halaman produk: tombol beli Premium dan Lengkap baru tampil bila server sudah menjualnya */
+function siapkanProduk() {
+  infoJual().then(function (info) {
+    (info.paket || []).forEach(function (x) {
+      Array.prototype.forEach.call(document.querySelectorAll('[data-jual="' + x.paket + '"]'), function (el) { el.hidden = false; });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-segera="' + x.paket + '"]'), function (el) { el.hidden = true; });
+    });
+  }).catch(function () { /* tetap "Segera hadir" */ });
+}
+
 /* Halaman /beli/selesai/: Midtrans menambahkan ?order_id=...&transaction_status=... */
 function siapkanSelesai() {
-  var q = new URLSearchParams(location.search), id = q.get('order_id') || '';
+  var id = parameter('order_id');
   if (!/^BDP-\d{8}-[A-Z0-9]{6}$/.test(id)) return;
   $('nomor').textContent = id;
   $('infoPesanan').hidden = false;
   if (!ALAMAT_SERVER) return;
   var coba = 0;
   var teks = {
-    lunas: function (j) { return 'Pembayaran berhasil. Kode lisensi dikirim ke ' + j.email + '.'; },
+    lunas: function (j) {
+      return NAMA_PAKET[j.paket] && NAMA_PAKET[j.paket].kode
+        ? 'Pembayaran berhasil. Premium keluarga Anda sudah aktif; buka menu Scan struk atau Analisis AI di aplikasi. Rincian dikirim ke ' + j.email + '.'
+        : 'Pembayaran berhasil. Kode lisensi dikirim ke ' + j.email + '.';
+    },
     menunggu: function () { return 'Menunggu pembayaran. Selesaikan pembayaran sesuai petunjuk Midtrans; halaman ini akan diperbarui otomatis.'; },
     ditinjau: function () { return 'Pembayaran sedang ditinjau oleh bank. Kami kabari lewat email setelah selesai.'; },
     kedaluwarsa: function () { return 'Batas waktu pembayaran sudah lewat. Silakan pesan ulang dari halaman Beli.'; },

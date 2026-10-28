@@ -28,11 +28,15 @@
   </div>
   <form id="formBeli" class="kartu" hidden novalidate>
     <p id="modeUji" class="cat" hidden><b>Mode uji coba (Sandbox).</b> Pembayaran tidak sungguhan; pakai simulator Midtrans.</p>
-    <span class="label">Aplikasi</span>
-    <div class="harga">Rp79.000 <small>sekali bayar</small></div>
+    <fieldset class="paket-pilih" style="border:0;padding:0;margin:0"><legend class="label">Pilih paket</legend><div id="pilihPaket" class="paket-pilih"></div></fieldset>
+    <div id="kolomKode" hidden>
+      <label for="kode">Kode lisensi keluarga</label>
+      <input id="kode" name="kode" autocomplete="off" autocapitalize="characters" maxlength="12" placeholder="BD-ABCD-EF23">
+      <p class="muted tipis" style="margin-top:6px">Ada di email pembelian aplikasi. Pemilik akun juga bisa membuka halaman ini dari menu Premium di aplikasi; kodenya terisi otomatis.</p>
+    </div>
     <label for="nama">Nama</label>
     <input id="nama" name="nama" autocomplete="name" maxlength="60" required>
-    <label for="email">Email untuk menerima kode lisensi</label>
+    <label for="email" id="labelEmail">Email untuk menerima kode lisensi</label>
     <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="100" required>
     <p class="muted tipis" style="margin-top:6px">Sebaiknya email akun Google yang akan dipakai membuka Bedah Dompet.</p>
     <label style="display:flex;gap:10px;align-items:flex-start;font-weight:400"><input id="setuju" type="checkbox" style="width:22px;min-height:22px;margin-top:3px;flex:none"> <span>Saya menyetujui <a href="/syarat-ketentuan/">Syarat &amp; Ketentuan</a> dan <a href="/kebijakan-privasi/">Kebijakan Privasi</a>.</span></label>
