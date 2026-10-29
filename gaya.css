@@ -37,7 +37,7 @@ header.atas{position:sticky;top:0;z-index:10;padding:12px 0 0}
 section[id],h2[id]{scroll-margin-top:96px}
 header.atas .wrap{display:flex;align-items:center;gap:16px;min-height:60px;flex-wrap:wrap;padding:8px 12px 8px 16px;border-radius:22px;max-width:1080px;width:calc(100% - 32px)}
 .merek{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--fg);text-decoration:none}
-.merek img{width:34px;height:34px;border-radius:10px}
+.merek img{height:44px;width:auto;border-radius:10px;background:#fff;box-shadow:0 0 0 1px var(--tepi),0 4px 12px rgba(35,16,100,.12)}
 nav.menu{margin-left:auto;display:flex;gap:6px 6px;flex-wrap:wrap;font-size:15px}
 nav.menu a{color:var(--muted);text-decoration:none;font-weight:700;padding:8px 14px;border-radius:14px;transition:background-color .25s,color .25s}
 nav.menu a:hover{background:var(--soft);color:var(--fg)}

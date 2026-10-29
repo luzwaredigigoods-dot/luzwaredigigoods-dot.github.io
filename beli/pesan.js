@@ -6,7 +6,7 @@ var ALAMAT_SERVER = 'https://script.google.com/macros/s/AKfycbwf1m9xaK5L8L_U4GZc
 
 var NAMA_PAKET = {
   aplikasi: { judul: 'Aplikasi', ket: 'sekali bayar' },
-  lengkap: { judul: 'Bedah Dompet Lengkap', ket: 'sekali bayar · aplikasi + Premium selamanya' },
+  lengkap: { judul: 'Bedah Dompet Lengkap', ket: 'sekali bayar · aplikasi + Premium 3 tahun sejak diaktifkan' },
   premium_bulan: { judul: 'Premium 1 bulan', ket: 'untuk keluarga yang sudah punya kode lisensi', kode: true },
   premium_tahun: { judul: 'Premium 12 bulan', ket: 'untuk keluarga yang sudah punya kode lisensi', kode: true }
 };
