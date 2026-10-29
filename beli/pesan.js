@@ -23,6 +23,18 @@ function pesanAwam(e) {
 function $(id) { return document.getElementById(id); }
 function rupiah(n) { return 'Rp' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
 function parameter(nama) { return new URLSearchParams(location.search).get(nama) || ''; }
+/* Tiket pesanan disimpan di browser ini saja; halaman selesai bayar memakainya untuk menampilkan kode lisensi */
+function simpanTiket(id, tiket) {
+  try {
+    var t = JSON.parse(localStorage.getItem('bd_tiket') || '{}');
+    t[id] = tiket;
+    var k = Object.keys(t); if (k.length > 5) delete t[k[0]];
+    localStorage.setItem('bd_tiket', JSON.stringify(t));
+  } catch (e) { /* penyimpanan browser mati: kode tetap dikirim lewat email */ }
+}
+function ambilTiket(id) {
+  try { return JSON.parse(localStorage.getItem('bd_tiket') || '{}')[id] || ''; } catch (e) { return ''; }
+}
 function infoJual() {
   if (!ALAMAT_SERVER) return Promise.reject(new Error('belum'));
   return panggilServer({ aksi: 'info' }).then(function (info) {
@@ -69,7 +81,7 @@ function siapkanBeli() {
     }
     tombol.disabled = true; tombol.textContent = 'Menyiapkan pembayaran…';
     panggilServer(isi)
-      .then(function (j) { location.href = j.redirect_url; })
+      .then(function (j) { if (j.tiket) simpanTiket(j.order_id, j.tiket); location.href = j.redirect_url; })
       .catch(function (e) {
         salah.textContent = pesanAwam(e); salah.hidden = false;
         tombol.disabled = false; tombol.textContent = 'Lanjut ke pembayaran';
@@ -99,18 +111,34 @@ function siapkanSelesai() {
     lunas: function (j) {
       return NAMA_PAKET[j.paket] && NAMA_PAKET[j.paket].kode
         ? 'Pembayaran berhasil. Premium keluarga Anda sudah aktif; buka menu Scan struk atau Analisis AI di aplikasi. Rincian dikirim ke ' + j.email + '.'
-        : 'Pembayaran berhasil. Kode lisensi dikirim ke ' + j.email + '.';
+        : j.kode ? 'Pembayaran berhasil.' : 'Pembayaran berhasil. Kode lisensi dikirim ke ' + j.email + '.';
     },
     menunggu: function () { return 'Menunggu pembayaran. Selesaikan pembayaran sesuai petunjuk Midtrans; halaman ini akan diperbarui otomatis.'; },
     ditinjau: function () { return 'Pembayaran sedang ditinjau oleh bank. Kami kabari lewat email setelah selesai.'; },
     kedaluwarsa: function () { return 'Batas waktu pembayaran sudah lewat. Silakan pesan ulang dari halaman Beli.'; },
     batal: function () { return 'Pembayaran dibatalkan atau ditolak. Silakan pesan ulang dari halaman Beli.'; }
   };
+  var tiket = ambilTiket(id);
+  function tampilKode(j) {
+    $('kodeLisensi').textContent = j.kode;
+    if (/^https:\/\//.test(j.aplikasi || '')) $('pasangAplikasi').href = j.aplikasi; else $('pasangAplikasi').hidden = true;
+    $('ketEmail').textContent = j.email_terkirim
+      ? 'Kode yang sama dan panduan pemasangan sudah dikirim juga ke ' + j.email + '.'
+      : 'Kode yang sama dan panduan pemasangan juga akan dikirim ke ' + j.email + '. Bila sedang ramai, email bisa tiba beberapa jam kemudian, jadi simpan kode ini sekarang.';
+    $('salinKode').hidden = !navigator.clipboard;
+    $('kotakKode').hidden = false;
+  }
+  $('salinKode').addEventListener('click', function () {
+    var b = this, k = $('kodeLisensi').textContent;
+    function selesai() { b.textContent = 'Tersalin'; setTimeout(function () { b.textContent = 'Salin kode'; }, 2000); }
+    if (navigator.clipboard) navigator.clipboard.writeText(k).then(selesai, function () {});
+  });
   function cek() {
-    panggilServer({ aksi: 'status', order_id: id }).then(function (j) {
+    panggilServer({ aksi: 'status', order_id: id, tiket: tiket }).then(function (j) {
       var f = teks[j.status];
       $('statusBayar').textContent = f ? f(j) : 'Pesanan sedang kami periksa. Hubungi kami bila ada pertanyaan.';
       $('statusBayar').hidden = false;
+      if (j.kode) tampilKode(j);
       if ((j.status === 'menunggu' || j.status === 'ditinjau') && ++coba < 20) setTimeout(cek, coba < 6 ? 5000 : 30000);
     }).catch(function () { if (++coba < 20) setTimeout(cek, 15000); });
   }
