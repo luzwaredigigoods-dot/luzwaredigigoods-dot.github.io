@@ -127,6 +127,12 @@ function siapkanSelesai() {
       : 'Kode yang sama dan panduan pemasangan juga akan dikirim ke ' + j.email + '. Bila sedang ramai, email bisa tiba beberapa jam kemudian, jadi simpan kode ini sekarang.';
     $('salinKode').hidden = !navigator.clipboard;
     $('kotakKode').hidden = false;
+    /* Kode sudah di layar: petunjuk tidak lagi menyuruh menunggu email */
+    $('pembuka').textContent = 'Pembayaran berhasil. Simpan kode lisensi di bawah ini.';
+    $('langkah').innerHTML = '<li><b>Ketuk Pasang aplikasi</b> di bawah kode, lalu pasang Bedah Dompet di HP atau laptop.</li>' +
+      '<li><b>Masuk</b> dengan akun Google, buat PIN, lalu masukkan kode lisensi.</li>' +
+      '<li><b>Simpan email kode lisensi</b> sebagai cadangan (cek juga folder Spam/Promosi).</li>';
+    $('bantuanEmail').hidden = true;
   }
   $('salinKode').addEventListener('click', function () {
     var b = this, k = $('kodeLisensi').textContent;
