@@ -22,7 +22,7 @@
 <main>
 <section style="padding-top:36px"><div class="baca">
 <h1>Kebijakan Privasi</h1>
-<p class="muted">Terakhir diperbarui: 27 Oktober 2026</p>
+<p class="muted">Terakhir diperbarui: 31 Oktober 2026</p>
 
 <p>Kebijakan ini menjelaskan bagaimana <b>Luzware Digi Goods</b> (&ldquo;kami&rdquo;) memperlakukan data Anda saat Anda memakai Bedah Dompet dan situs ini. Prinsip utama kami: <b>data keuangan Anda tinggal di Google Drive Anda sendiri, bukan di server kami.</b></p>
 
@@ -34,11 +34,26 @@
 <tr><th>Izin</th><th>Untuk apa</th></tr>
 <tr><td><code>drive.file</code></td><td>Membuat dan membuka file Bedah Dompet milik Anda. Aplikasi <b>tidak</b> dapat membaca file lain di Drive Anda. File hanya dapat dibuka bila dibuat oleh aplikasi atau Anda pilih sendiri.</td></tr>
 <tr><td>Alamat email akun Google</td><td>Mengenali akun Anda, menghubungkannya dengan lisensi, dan menentukan siapa pemilik dan pasangan dalam satu keluarga.</td></tr>
-<tr><td>Permintaan ke layanan luar</td><td>Menghubungi server lisensi kami untuk aktivasi dan pengecekan lisensi (lihat bagian 3).</td></tr>
+<tr><td>Permintaan ke layanan luar</td><td>Menghubungi server lisensi kami untuk aktivasi dan pengecekan lisensi, acuan zakat, laporan masalah yang Anda kirim, dan fitur Premium (lihat bagian 3).</td></tr>
 </table>
 <p>Pemakaian dan pemindahan informasi yang diterima dari API Google oleh Bedah Dompet mematuhi <a href="https://developers.google.com/terms/api-services-user-data-policy">Kebijakan Data Pengguna Layanan API Google</a>, termasuk persyaratan Penggunaan Terbatas (<i>Limited Use</i>). Data dari Google hanya dipakai untuk menjalankan fitur yang Anda lihat di aplikasi; tidak dijual, tidak dipakai untuk iklan, dan tidak dibaca oleh manusia kecuali Anda mengirimkannya sendiri lewat laporan masalah atau diwajibkan hukum.</p>
 
-<h2>3. Data yang kami simpan</h2>
+<h2 id="data-google">3. Dengan siapa data dari Google dibagikan</h2>
+<p>&ldquo;Data dari Google&rdquo; adalah data yang diterima Bedah Dompet lewat izin di bagian 2: alamat email akun Google Anda, dan isi file <i>Bedah Dompet – Data Keluarga</i> di Drive Anda. Data itu hanya dibagikan, dipindahkan, atau diungkapkan kepada pihak berikut, untuk tujuan berikut:</p>
+<table>
+<tr><th>Penerima</th><th>Data dari Google yang diterima</th><th>Untuk apa</th></tr>
+<tr><td><b>Server lisensi kami</b> (Google Apps Script milik Luzware Digi Goods)</td><td>Alamat email akun Google</td><td>Mengaktifkan dan memeriksa lisensi, menghitung kuota Premium, dan membalas laporan masalah yang Anda kirim.</td></tr>
+<tr><td><b>Anthropic, PBC</b> (Amerika Serikat), penyedia AI Claude</td><td>Hanya saat Anda menekan tombol Premium: foto struk yang Anda pilih dan daftar nama kategori Anda (Scan struk), atau jumlah uang per kelompok dan kategori dari file Drive Anda (Analisis AI). Tidak termasuk email, nama orang, atau catatan.</td><td>Membaca struk dan menyusun analisis yang Anda minta. Hasilnya dikembalikan ke aplikasi; kami tidak menyimpannya.</td></tr>
+<tr><td><b>Google</b></td><td>Semua data di atas</td><td>Menjalankan aplikasi (Apps Script), menyimpan file di Drive Anda, dan mengirim email.</td></tr>
+<tr><td>Pihak berwenang</td><td>Sebatas yang diminta</td><td>Hanya bila diwajibkan peraturan perundang-undangan.</td></tr>
+</table>
+<ul>
+<li>Data dari Google <b>tidak dijual</b>, tidak dipakai untuk iklan, tidak dibagikan kepada pihak lain di luar tabel di atas, dan tidak dibaca oleh manusia kecuali Anda mengirimkannya sendiri lewat laporan masalah, untuk keamanan, atau diwajibkan hukum.</li>
+<li><b>Tidak dipakai untuk melatih AI.</b> Kami tidak memakai, dan tidak mengizinkan penyedia AI kami memakai, data dari Google (termasuk data dari Google Drive) untuk mengembangkan, memperbaiki, atau melatih model AI/ML umum.</li>
+<li>Sebagian penerima di atas (Google dan Anthropic) memproses data di luar Indonesia. Bila Anda tidak ingin data apa pun dikirim ke penyedia AI, jangan memakai fitur Premium.</li>
+</ul>
+
+<h2>4. Data yang kami simpan</h2>
 <table>
 <tr><th>Data</th><th>Tujuan</th></tr>
 <tr><td>Kode lisensi, paket, status, email akun Google, waktu aktivasi</td><td>Memastikan lisensi Anda sah dan hanya dipakai satu keluarga.</td></tr>
@@ -49,7 +64,7 @@
 </table>
 <p>Data ini tersimpan di spreadsheet milik kami di Google Drive dengan akses terbatas pada kami.</p>
 
-<h2 id="premium">4. Fitur Premium (AI)</h2>
+<h2 id="premium">5. Fitur Premium (AI)</h2>
 <p>Fitur Premium baru berjalan bila Anda memakainya. Data hanya dikirim <b>saat Anda menekan tombolnya</b>:</p>
 <ul>
 <li><b>Scan struk:</b> foto struk yang Anda pilih, beserta daftar nama kategori Anda (agar AI bisa menyarankan kategori), dikirim lewat server kami ke penyedia layanan AI untuk dibaca menjadi angka.</li>
@@ -57,33 +72,42 @@
 </ul>
 <p>Penyedia layanan AI kami adalah Anthropic (model Claude). Kunci akses layanan itu hanya ada di server kami, tidak pernah di perangkat Anda. Kami tidak menyimpan foto struk atau isi analisis setelah hasilnya dikembalikan ke aplikasi. Penyedia AI menerapkan kebijakan privasinya sendiri atas data yang diterimanya. Bila Anda tidak ingin data apa pun dikirim, jangan memakai fitur Premium.</p>
 
-<h2>5. Pembayaran</h2>
-<p>Pembayaran diproses oleh <b>Midtrans</b>. Detail kartu, rekening, atau e-wallet Anda dimasukkan di halaman Midtrans dan tidak melewati atau tersimpan di server kami. Kami hanya menerima status pembayaran dan data pesanan di bagian 3.</p>
+<h2>6. Pembayaran</h2>
+<p>Pembayaran diproses oleh <b>Midtrans</b>. Detail kartu, rekening, atau e-wallet Anda dimasukkan di halaman Midtrans dan tidak melewati atau tersimpan di server kami. Kami hanya menerima status pembayaran dan data pesanan di bagian 4.</p>
 
-<h2>6. Pihak lain yang terlibat</h2>
+<h2>7. Pihak lain yang terlibat</h2>
 <ul>
 <li><b>Google</b>: akun, Drive, Sheets, Apps Script, pengiriman email kode lisensi, dan huruf (font) situs ini lewat Google Fonts.</li>
 <li><b>Midtrans</b>: pembayaran.</li>
-<li><b>Anthropic</b>: hanya untuk fitur Premium, sesuai bagian 4.</li>
+<li><b>Anthropic</b>: hanya untuk fitur Premium, sesuai bagian 5.</li>
 <li><b>GitHub Pages</b>: menyajikan situs ini. Situs tidak memakai pelacak iklan atau analitik pihak ketiga.</li>
 </ul>
 <p>Kami tidak menjual data Anda kepada siapa pun.</p>
 
-<h2>7. Penyimpanan dan penghapusan</h2>
+<h2>8. Penyimpanan dan penghapusan</h2>
 <ul>
 <li><b>Data keuangan di Drive Anda:</b> Anda yang mengendalikannya. Hapus file <i>Bedah Dompet – Data Keluarga</i> dari Drive Anda kapan saja.</li>
 <li><b>Mencabut izin aplikasi:</b> buka <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a> lalu cabut akses Bedah Dompet.</li>
-<li><b>Data di sisi kami</b> (bagian 3): minta penghapusan lewat <a href="/kontak/">halaman kontak</a> dengan menyebut email Anda. Kami memprosesnya dalam waktu wajar. Catatan transaksi dapat kami simpan sebatas yang dibutuhkan untuk kewajiban pembukuan dan pajak, dan lisensi yang datanya dihapus tidak dapat dipulihkan.</li>
+<li><b>Data di sisi kami</b> (bagian 4): minta penghapusan lewat <a href="/kontak/">halaman kontak</a> dengan menyebut email Anda. Kami memprosesnya dalam waktu wajar. Catatan transaksi dapat kami simpan sebatas yang dibutuhkan untuk kewajiban pembukuan dan pajak, dan lisensi yang datanya dihapus tidak dapat dipulihkan.</li>
 </ul>
 
-<h2>8. Keamanan</h2>
+<h2>9. Keamanan</h2>
 <p>PIN Anda disimpan sebagai hash terenkripsi dalam file Drive Anda, bukan sebagai angka biasa. Server lisensi kami memakai kunci rahasia dan pembatasan percobaan. Tidak ada sistem yang sepenuhnya kebal; jaga akun Google dan perangkat Anda, dan aktifkan verifikasi dua langkah di Google.</p>
 
-<h2>9. Anak-anak</h2>
+<h2>10. Anak-anak</h2>
 <p>Bedah Dompet ditujukan bagi orang dewasa. Kami tidak sengaja mengumpulkan data anak.</p>
 
-<h2>10. Hak Anda dan perubahan kebijakan</h2>
+<h2>11. Hak Anda dan perubahan kebijakan</h2>
 <p>Sesuai UU Pelindungan Data Pribadi (UU No. 27 Tahun 2022), Anda berhak mengakses, memperbaiki, dan meminta penghapusan data pribadi Anda yang kami pegang. Ajukan lewat <a href="/kontak/">halaman kontak</a>. Bila kebijakan ini berubah, tanggal di atas diperbarui, dan perubahan penting kami sampaikan lewat email atau di aplikasi.</p>
+
+<h2 id="english">English summary: Google user data</h2>
+<p>Bedah Dompet accesses two kinds of Google user data: the user's Google Account email address (<code>userinfo.email</code>) and the content of the single spreadsheet the app creates or the user picks in Google Drive (<code>drive.file</code>). The app also uses <code>script.external_request</code> to contact our own license server.</p>
+<ul>
+<li><b>Who we share, transfer or disclose Google user data with:</b> (1) our own license server, a Google Apps Script web app owned by Luzware Digi Goods, which receives only the email address, to activate and check licenses, count Premium quota, and answer bug reports the user submits; (2) Anthropic, PBC (USA), our AI provider, which receives data only when the user starts a Premium feature: the receipt photo the user selects with the user's category names, or monthly totals per spending category read from the user's Drive file (no email, names or notes), solely to return the result to the user, and we do not store it; (3) Google, which hosts the app, the user's Drive file and email delivery; (4) authorities, only where required by law.</li>
+<li>We do not sell Google user data, use it for advertising, or share it with anyone else. Humans do not read it except when the user sends it to us in a bug report, for security, or as required by law.</li>
+<li>We do not use, and do not allow our AI provider to use, Google user data (including data from Google Workspace APIs such as Google Drive) to develop, improve, or train generalized AI and/or ML models.</li>
+<li>Bedah Dompet's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</li>
+</ul>
 
 </div></section>
 </main>
