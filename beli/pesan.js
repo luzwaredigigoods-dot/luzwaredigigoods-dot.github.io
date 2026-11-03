@@ -3,6 +3,9 @@
    Selama kosong, atau server masih mode uji (Sandbox), pembeli melihat "Segera dibuka".
    Untuk mencoba Sandbox: buka /beli/?uji=1. Paket yang bisa dibeli (dan harganya) ditentukan server. */
 var ALAMAT_SERVER = 'https://script.google.com/macros/s/AKfycbwf1m9xaK5L8L_U4GZcI3FZz5gx-sG6zcG6zHJMsHiA79jZzZL3eDo2xAMCqVyfpRgd/exec';
+/* Kunci situs Cloudflare Turnstile (verifikasi "Saya bukan robot"), diisi skrip/isi-situs.py --turnstile.
+   Selama kosong, verifikasi dilewati (server juga hanya memeriksa bila TURNSTILE_SECRET diisi). */
+var TURNSTILE_SITEKEY = '';
 
 var NAMA_PAKET = {
   aplikasi: { judul: 'Aplikasi', ket: 'sekali bayar' },
@@ -35,6 +38,24 @@ function simpanTiket(id, tiket) {
 function ambilTiket(id) {
   try { return JSON.parse(localStorage.getItem('bd_tiket') || '{}')[id] || ''; } catch (e) { return ''; }
 }
+var tokenTurnstile = '';
+function muatTurnstile(saatSiap) {
+  if (!TURNSTILE_SITEKEY) { saatSiap(); return; }
+  function render() {
+    try {
+      window.turnstile.render('#turnstile', { sitekey: TURNSTILE_SITEKEY, callback: function (t) { tokenTurnstile = t; } });
+    } catch (e) { /* sudah dirender */ }
+    saatSiap();
+  }
+  if (window.turnstile) { render(); return; }
+  var sc = document.createElement('script');
+  sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  sc.async = true; sc.defer = true;
+  sc.onload = render;
+  sc.onerror = function () { saatSiap(); };  // bila gagal dimuat, biarkan server yang menolak
+  document.head.appendChild(sc);
+}
+function resetTurnstile() { tokenTurnstile = ''; try { if (window.turnstile) window.turnstile.reset('#turnstile'); } catch (e) { /* abaikan */ } }
 function infoJual() {
   if (!ALAMAT_SERVER) return Promise.reject(new Error('belum'));
   return panggilServer({ aksi: 'info' }).then(function (info) {
@@ -67,6 +88,7 @@ function siapkanBeli() {
     $('belum').hidden = true;
     $('formBeli').hidden = false;
     $('modeUji').hidden = !info.sandbox;
+    muatTurnstile(function () { /* widget siap */ });
   }).catch(function () { /* tetap "Segera dibuka" */ });
 
   $('formBeli').addEventListener('submit', function (ev) {
@@ -74,7 +96,9 @@ function siapkanBeli() {
     var tombol = $('tombolBayar'), salah = $('salah');
     salah.hidden = true;
     if (!$('setuju').checked) { salah.textContent = 'Centang persetujuan Syarat & Ketentuan dulu.'; salah.hidden = false; return; }
+    if (TURNSTILE_SITEKEY && !tokenTurnstile) { salah.textContent = 'Selesaikan dulu verifikasi "Saya bukan robot".'; salah.hidden = false; return; }
     var isi = { aksi: 'pesan', paket: paket, nama: $('nama').value, email: $('email').value };
+    if (TURNSTILE_SITEKEY) isi.turnstile = tokenTurnstile;
     if (NAMA_PAKET[paket].kode) {
       isi.kode = $('kode').value.trim().toUpperCase();
       if (!/^BD-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(isi.kode)) { salah.textContent = 'Isi kode lisensi keluarga Anda (contoh BD-ABCD-EF23).'; salah.hidden = false; return; }
@@ -85,6 +109,7 @@ function siapkanBeli() {
       .catch(function (e) {
         salah.textContent = pesanAwam(e); salah.hidden = false;
         tombol.disabled = false; tombol.textContent = 'Lanjut ke pembayaran';
+        resetTurnstile();  // token sekali pakai: minta verifikasi baru
       });
   });
 }
