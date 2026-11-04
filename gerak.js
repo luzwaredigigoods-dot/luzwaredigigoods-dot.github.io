@@ -34,3 +34,30 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && atas.classList.contains('buka')) { atur(false); t.focus(); } });
   window.addEventListener('resize', function () { if (window.innerWidth > 700) atur(false); });
 })();
+
+/* Tur fitur di halaman produk: tab memilih satu panel; panah kiri/kanan berpindah tab.
+   Tanpa skrip ini semua panel tetap tampil berurutan. Video: memutar satu video menjeda video lain. */
+(function () {
+  var tur = document.querySelector('.tur'); if (!tur) return;
+  var tab = tur.querySelector('.tur-tab'), b = Array.prototype.slice.call(tab.querySelectorAll('button'));
+  document.documentElement.classList.add('tur-js'); tab.hidden = false;
+  function pilih(i, fokus) {
+    b.forEach(function (x, j) {
+      var on = i === j, p = document.getElementById(x.getAttribute('aria-controls'));
+      x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; p.classList.toggle('aktif', on);
+      if (on) { if (fokus) x.focus(); x.scrollIntoView({ block: 'nearest', inline: 'center' }); }
+    });
+  }
+  b.forEach(function (x, i) {
+    x.addEventListener('click', function () { pilih(i); });
+    x.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); pilih((i + (e.key === 'ArrowRight' ? 1 : b.length - 1)) % b.length, true); }
+    });
+  });
+  var p0 = tur.querySelector('.tur-panel'); p0.classList.add('aktif');
+  b[0].setAttribute('aria-selected', 'true'); b.slice(1).forEach(function (x) { x.tabIndex = -1; });
+})();
+(function () {
+  var v = Array.prototype.slice.call(document.querySelectorAll('.galeri-video video'));
+  v.forEach(function (x) { x.addEventListener('play', function () { v.forEach(function (y) { if (y !== x) y.pause(); }); }); });
+})();
