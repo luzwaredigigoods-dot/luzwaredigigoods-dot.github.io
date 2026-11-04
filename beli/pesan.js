@@ -5,7 +5,7 @@
 var ALAMAT_SERVER = 'https://script.google.com/macros/s/AKfycbwf1m9xaK5L8L_U4GZcI3FZz5gx-sG6zcG6zHJMsHiA79jZzZL3eDo2xAMCqVyfpRgd/exec';
 /* Kunci situs Cloudflare Turnstile (verifikasi "Saya bukan robot"), diisi skrip/isi-situs.py --turnstile.
    Selama kosong, verifikasi dilewati (server juga hanya memeriksa bila TURNSTILE_SECRET diisi). */
-var TURNSTILE_SITEKEY = '';
+var TURNSTILE_SITEKEY = '0x4AAAAAAFyrsoKhYJ6cmrMh';
 
 var NAMA_PAKET = {
   aplikasi: { judul: 'Aplikasi', ket: 'sekali bayar' },
@@ -38,16 +38,23 @@ function simpanTiket(id, tiket) {
 function ambilTiket(id) {
   try { return JSON.parse(localStorage.getItem('bd_tiket') || '{}')[id] || ''; } catch (e) { return ''; }
 }
-var tokenTurnstile = '';
+var tokenTurnstile = '', idTurnstile = null;
+/* Wadah widget memakai id "wadahTurnstile", BUKAN "turnstile": browser menjadikan elemen ber-id sebagai variabel global,
+   sehingga id "turnstile" membuat window.turnstile menunjuk ke <div> itu dan skrip Cloudflare tidak pernah dimuat. */
+function apiTurnstile() { return window.turnstile && typeof window.turnstile.render === 'function' ? window.turnstile : null; }
 function muatTurnstile(saatSiap) {
   if (!TURNSTILE_SITEKEY) { saatSiap(); return; }
   function render() {
     try {
-      window.turnstile.render('#turnstile', { sitekey: TURNSTILE_SITEKEY, callback: function (t) { tokenTurnstile = t; } });
+      idTurnstile = apiTurnstile().render('#wadahTurnstile', {
+        sitekey: TURNSTILE_SITEKEY,
+        callback: function (t) { tokenTurnstile = t; },
+        'expired-callback': function () { tokenTurnstile = ''; }  // token kedaluwarsa (±5 menit): widget memperbarui sendiri
+      });
     } catch (e) { /* sudah dirender */ }
     saatSiap();
   }
-  if (window.turnstile) { render(); return; }
+  if (apiTurnstile()) { render(); return; }
   var sc = document.createElement('script');
   sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
   sc.async = true; sc.defer = true;
@@ -55,7 +62,7 @@ function muatTurnstile(saatSiap) {
   sc.onerror = function () { saatSiap(); };  // bila gagal dimuat, biarkan server yang menolak
   document.head.appendChild(sc);
 }
-function resetTurnstile() { tokenTurnstile = ''; try { if (window.turnstile) window.turnstile.reset('#turnstile'); } catch (e) { /* abaikan */ } }
+function resetTurnstile() { tokenTurnstile = ''; try { var api = apiTurnstile(); if (api) api.reset(idTurnstile === null ? undefined : idTurnstile); } catch (e) { /* abaikan */ } }
 function infoJual() {
   if (!ALAMAT_SERVER) return Promise.reject(new Error('belum'));
   return panggilServer({ aksi: 'info' }).then(function (info) {
