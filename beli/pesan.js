@@ -131,6 +131,33 @@ function siapkanProduk() {
   }).catch(function () { /* tetap "Segera hadir" */ });
 }
 
+/* Halaman produk: bagian "Kata pembeli" (aksi publik ulasan_publik di server lisensi, di-cache 1 jam di server).
+   Tetap tersembunyi bila server belum diisi, belum mendukung ulasan, atau belum ada ulasan yang boleh tampil.
+   Semua teks dimasukkan lewat textContent (bukan innerHTML). */
+function siapkanUlasan() {
+  var wadah = $('ulasan'), daftar = $('daftarUlasan');
+  if (!wadah || !daftar || !ALAMAT_SERVER) return;
+  panggilServer({ aksi: 'ulasan_publik' }).then(function (j) {
+    var l = Array.isArray(j.daftar) ? j.daftar : [];
+    if (!l.length || !(j.jumlah > 0)) return;
+    var bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    var bintang = function (n) { n = Math.max(0, Math.min(5, Math.round(Number(n) || 0))); return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n); };
+    $('ringkasUlasan').textContent = 'Rata-rata ' + String(j.rata).replace('.', ',') + ' dari 5 bintang, dari ' + j.jumlah + ' ulasan pembeli.';
+    l.slice(0, 12).forEach(function (x) {
+      var k = document.createElement('figure'); k.className = 'kartu'; k.style.margin = '0';
+      var b = document.createElement('div'); b.className = 'bintang'; b.textContent = bintang(x.bintang);
+      b.setAttribute('aria-label', (Number(x.bintang) || 0) + ' dari 5 bintang'); b.style.color = '#E39B0B'; b.style.fontSize = '20px'; b.style.letterSpacing = '2px';
+      k.appendChild(b);
+      if (x.ulasan) { var q = document.createElement('blockquote'); q.style.margin = '8px 0'; q.textContent = String(x.ulasan).replace(/^'/, ''); k.appendChild(q); }
+      var c = document.createElement('figcaption'); c.className = 'muted';
+      var m = /^(\d{4})-(\d{2})$/.exec(String(x.bulan || ''));
+      c.textContent = String(x.nama || '') + (m ? ' · ' + bulan[Number(m[2]) - 1] + ' ' + m[1] : '');
+      k.appendChild(c); daftar.appendChild(k);
+    });
+    wadah.hidden = false;
+  }).catch(function () { /* tetap tersembunyi */ });
+}
+
 /* Halaman /beli/selesai/: Midtrans menambahkan ?order_id=...&transaction_status=... */
 function siapkanSelesai() {
   var id = parameter('order_id');
