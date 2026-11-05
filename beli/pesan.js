@@ -142,7 +142,7 @@ function siapkanSelesai() {
   var teks = {
     lunas: function (j) {
       return NAMA_PAKET[j.paket] && NAMA_PAKET[j.paket].kode
-        ? 'Pembayaran berhasil. Premium keluarga Anda sudah aktif; buka menu Scan struk atau Analisis AI di aplikasi. Rincian dikirim ke ' + j.email + '.'
+        ? 'Pembayaran berhasil. Premium keluarga Anda sudah aktif; buka menu Scan Foto atau Analisis di aplikasi. Rincian dikirim ke ' + j.email + '.'
         : j.kode ? 'Pembayaran berhasil.' : 'Pembayaran berhasil. Kode lisensi dikirim ke ' + j.email + '.';
     },
     menunggu: function () { return 'Menunggu pembayaran. Selesaikan pembayaran sesuai petunjuk Midtrans; halaman ini akan diperbarui otomatis.'; },
