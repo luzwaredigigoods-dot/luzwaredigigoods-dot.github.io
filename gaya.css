@@ -196,3 +196,38 @@ html.tur-js .tur-panel.aktif{display:grid;animation:naik .5s cubic-bezier(.2,.8,
 html.tur-js .tur-panel.aktif .tur-layar img{animation:naik .6s cubic-bezier(.2,.8,.2,1) both}
 html.tur-js .tur-panel.aktif .tur-layar img:nth-child(2){animation-delay:.08s}
 html.tur-js .tur-panel>.tur-teks>.label{display:none}
+
+/* Sorotan di hero, bagian perangkat, dan Scan struk (5 Nov 2026) */
+.sorot{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.sorot a{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;font-weight:700;font-size:14.5px;text-decoration:none;color:var(--acc-d);background:var(--kaca);border:1px solid var(--tepi);box-shadow:inset 0 1px 0 var(--kilap)}
+.sorot a span{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;background:var(--label-bg);color:var(--label-fg);padding:2px 8px;border-radius:99px}
+@media(prefers-color-scheme:dark){.sorot a{color:var(--fg)}}
+.panggung{position:relative;max-width:960px;margin:28px auto 34px;padding:0 6% 7%}
+.panggung figure{margin:0}
+.panggung img{display:block;width:100%;height:auto}
+.panggung .laptop{position:relative}
+.panggung .laptop img{border:10px solid #17292B;border-bottom-width:12px;border-radius:16px 16px 4px 4px;box-shadow:0 30px 60px rgba(16,48,47,.22)}
+.panggung .laptop::after{content:"";display:block;height:14px;margin:0 -7%;border-radius:0 0 18px 18px;background:linear-gradient(#C9D3D2,#93A3A2);box-shadow:0 10px 24px rgba(16,48,47,.18)}
+.panggung .tablet{position:absolute;right:0;bottom:0;width:25%}
+.panggung .tablet img{border:9px solid #17292B;border-radius:22px;box-shadow:0 24px 48px rgba(16,48,47,.28)}
+.panggung .hp{position:absolute;left:1%;bottom:-2%;width:15%}
+.panggung .hp img{border:6px solid #17292B;border-radius:22px;box-shadow:0 24px 48px rgba(16,48,47,.28)}
+@media(max-width:720px){
+  .panggung{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:0;margin:18px 0 22px;align-items:end}
+  .panggung .laptop{grid-column:1/-1}
+  .panggung .laptop img{border-width:6px;border-bottom-width:8px;border-radius:10px 10px 3px 3px}
+  .panggung .laptop::after{height:9px;margin:0 -1%}
+  .panggung .tablet,.panggung .hp{position:static;width:auto}
+  .panggung .hp{grid-row:2;grid-column:2;width:72%;justify-self:center}
+  .panggung .tablet{grid-row:2;grid-column:1}
+}
+.scan{display:grid;gap:26px;align-items:center;border-radius:28px;padding:24px;background:var(--kaca);-webkit-backdrop-filter:blur(var(--buram)) saturate(170%);backdrop-filter:blur(var(--buram)) saturate(170%);border:1px solid var(--tepi);box-shadow:inset 0 1px 0 var(--kilap),var(--bayang)}
+@media(min-width:940px){.scan{grid-template-columns:.9fr 1.1fr;padding:36px}}
+.scan-teks h2{margin:.5em 0 .3em}
+.scan-teks .centang{margin:16px 0}
+.scan-langkah{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.scan-langkah li{display:grid;gap:4px;align-content:start;font-size:14.5px}
+.scan-langkah img{width:100%;height:auto;border-radius:24px;border:7px solid var(--kaca-kuat);box-shadow:0 0 0 1px var(--tepi),0 20px 40px rgba(16,48,47,.18);margin-bottom:8px}
+.scan-langkah b{color:var(--fg)}
+.scan-langkah span{color:var(--muted)}
+@media(max-width:720px){.scan-langkah{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 12px;margin:0 -4px}.scan-langkah li{scroll-snap-align:center}}

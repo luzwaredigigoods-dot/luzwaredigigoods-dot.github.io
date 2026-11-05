@@ -53,15 +53,15 @@
 <p>&ldquo;Data dari Google&rdquo; adalah data yang diterima Bedah Dompet lewat izin di bagian 2: alamat email akun Google Anda, dan isi file <i>Bedah Dompet – Data Keluarga</i> di Drive Anda. Data itu hanya dibagikan, dipindahkan, atau diungkapkan kepada pihak berikut, untuk tujuan berikut:</p>
 <table>
 <tr><th>Penerima</th><th>Data dari Google yang diterima</th><th>Untuk apa</th></tr>
-<tr><td><b>Server lisensi kami</b> (Google Apps Script milik Luzware Digi Goods)</td><td>Alamat email akun Google</td><td>Mengaktifkan dan memeriksa lisensi, menghitung kuota Premium, dan membalas laporan masalah yang Anda kirim.</td></tr>
-<tr><td><b>Anthropic, PBC</b> (Amerika Serikat), penyedia AI Claude</td><td>Hanya saat Anda menekan tombol Premium: foto struk yang Anda pilih dan daftar nama kategori Anda (Scan struk), atau jumlah uang per kelompok dan kategori dari file Drive Anda (Analisis AI). Tidak termasuk email, nama orang, atau catatan.</td><td>Membaca struk dan menyusun analisis yang Anda minta. Hasilnya dikembalikan ke aplikasi; kami tidak menyimpannya.</td></tr>
+<tr><td><b>Server lisensi kami</b> (Google Apps Script milik Luzware Digi Goods)</td><td>Alamat email akun Google</td><td>Mengaktifkan dan memeriksa lisensi, menghitung jatah Scan foto dan Analisis, dan membalas laporan masalah yang Anda kirim.</td></tr>
+<tr><td><b>Anthropic, PBC</b> (Amerika Serikat), penyedia AI Claude</td><td>Hanya saat Anda memakai Scan foto atau Analisis: foto struk yang Anda pilih dan daftar nama kategori Anda (Scan foto), atau jumlah uang per kelompok dan kategori dari file Drive Anda (Analisis). Tidak termasuk email, nama orang, atau catatan.</td><td>Membaca struk dan menyusun analisis yang Anda minta. Hasilnya dikembalikan ke aplikasi; kami tidak menyimpannya.</td></tr>
 <tr><td><b>Google</b></td><td>Semua data di atas</td><td>Menjalankan aplikasi (Apps Script), menyimpan file di Drive Anda, dan mengirim email.</td></tr>
 <tr><td>Pihak berwenang</td><td>Sebatas yang diminta</td><td>Hanya bila diwajibkan peraturan perundang-undangan.</td></tr>
 </table>
 <ul>
 <li>Data dari Google <b>tidak dijual</b>, tidak dipakai untuk iklan, tidak dibagikan kepada pihak lain di luar tabel di atas, dan tidak dibaca oleh manusia kecuali Anda mengirimkannya sendiri lewat laporan masalah, untuk keamanan, atau diwajibkan hukum.</li>
 <li><b>Tidak dipakai untuk melatih AI.</b> Kami tidak memakai, dan tidak mengizinkan penyedia AI kami memakai, data dari Google (termasuk data dari Google Drive) untuk mengembangkan, memperbaiki, atau melatih model AI/ML umum.</li>
-<li>Sebagian penerima di atas (Google dan Anthropic) memproses data di luar Indonesia. Bila Anda tidak ingin data apa pun dikirim ke penyedia AI, jangan memakai fitur Premium.</li>
+<li>Sebagian penerima di atas (Google dan Anthropic) memproses data di luar Indonesia. Bila Anda tidak ingin data apa pun dikirim ke penyedia AI, jangan memakai Scan foto dan Analisis.</li>
 </ul>
 
 <h2>4. Data yang kami simpan</h2>
@@ -71,17 +71,17 @@
 <tr><td>Catatan pesanan: nomor pesanan, nama, email pemesan, paket, nominal, status, waktu</td><td>Memproses pembayaran, mengirim kode lisensi, dan bukti transaksi.</td></tr>
 <tr><td>Log aktivasi: waktu, aksi, kode, email, hasil</td><td>Keamanan dan penelusuran masalah.</td></tr>
 <tr><td>Laporan masalah (bila Anda kirim): email, nama, uraian, versi aplikasi, jenis perangkat, pesan galat, dan hingga 3 gambar yang Anda lampirkan</td><td>Membantu kami menyelesaikan masalah Anda. Jangan melampirkan gambar yang memuat data pribadi yang tidak perlu.</td></tr>
-<tr><td>Pemakaian Premium (bila berlangganan): kode, bulan, jumlah scan dan analisis</td><td>Menghitung kuota bulanan.</td></tr>
+<tr><td>Pemakaian Scan foto dan Analisis: kode, bulan, jumlah scan dan analisis</td><td>Menghitung jatah bulanan.</td></tr>
 </table>
 <p>Data ini tersimpan di spreadsheet milik kami di Google Drive dengan akses terbatas pada kami.</p>
 
-<h2 id="premium">5. Fitur Premium (AI)</h2>
-<p>Fitur Premium baru berjalan bila Anda memakainya. Data hanya dikirim <b>saat Anda menekan tombolnya</b>:</p>
+<h2 id="premium">5. Scan foto dan Analisis (diproses AI)</h2>
+<p>Scan foto (untuk semua lisensi, dengan jatah bulanan) dan Analisis (Premium) baru berjalan bila Anda memakainya. Data hanya dikirim <b>saat Anda menekan tombolnya</b>:</p>
 <ul>
-<li><b>Scan struk:</b> foto struk yang Anda pilih, beserta daftar nama kategori Anda (agar AI bisa menyarankan kategori), dikirim lewat server kami ke penyedia layanan AI untuk dibaca menjadi angka.</li>
+<li><b>Scan foto:</b> foto struk yang Anda pilih, beserta daftar nama kategori Anda (agar bisa disarankan kategori per barang), dikirim lewat server kami ke penyedia layanan AI untuk dibaca menjadi angka dan rincian barang.</li>
 <li><b>Analisis keuangan:</b> hanya <b>ringkasan angka per kelompok dan kategori</b> yang dikirim. Nama orang dan catatan bebas tidak ikut dikirim.</li>
 </ul>
-<p>Penyedia layanan AI kami adalah Anthropic (model Claude). Kunci akses layanan itu hanya ada di server kami, tidak pernah di perangkat Anda. Kami tidak menyimpan foto struk atau isi analisis setelah hasilnya dikembalikan ke aplikasi. Penyedia AI menerapkan kebijakan privasinya sendiri atas data yang diterimanya. Bila Anda tidak ingin data apa pun dikirim, jangan memakai fitur Premium.</p>
+<p>Penyedia layanan AI kami adalah Anthropic (model Claude). Kunci akses layanan itu hanya ada di server kami, tidak pernah di perangkat Anda. Kami tidak menyimpan foto struk atau isi analisis setelah hasilnya dikembalikan ke aplikasi. Penyedia AI menerapkan kebijakan privasinya sendiri atas data yang diterimanya. Bila Anda tidak ingin data apa pun dikirim, jangan memakai Scan foto dan Analisis.</p>
 
 <h2>6. Pembayaran</h2>
 <p>Pembayaran diproses oleh <b>Midtrans</b>. Detail kartu, rekening, atau e-wallet Anda dimasukkan di halaman Midtrans dan tidak melewati atau tersimpan di server kami. Kami hanya menerima status pembayaran dan data pesanan di bagian 4.</p>
@@ -115,7 +115,7 @@
 <h2 id="english">English summary: Google user data</h2>
 <p>Bedah Dompet accesses two kinds of Google user data: the user's Google Account email address (<code>userinfo.email</code>) and the content of the single spreadsheet the app creates or the user picks in Google Drive (<code>drive.file</code>). The app also uses <code>script.external_request</code> to contact our own license server.</p>
 <ul>
-<li><b>Who we share, transfer or disclose Google user data with:</b> (1) our own license server, a Google Apps Script web app owned by Luzware Digi Goods, which receives only the email address, to activate and check licenses, count Premium quota, and answer bug reports the user submits; (2) Anthropic, PBC (USA), our AI provider, which receives data only when the user starts a Premium feature: the receipt photo the user selects with the user's category names, or monthly totals per spending category read from the user's Drive file (no email, names or notes), solely to return the result to the user, and we do not store it; (3) Google, which hosts the app, the user's Drive file and email delivery; (4) authorities, only where required by law.</li>
+<li><b>Who we share, transfer or disclose Google user data with:</b> (1) our own license server, a Google Apps Script web app owned by Luzware Digi Goods, which receives only the email address, to activate and check licenses, count Premium quota, and answer bug reports the user submits; (2) Anthropic, PBC (USA), our AI provider, which receives data only when the user starts the Receipt Scan or Analysis feature: the receipt photo the user selects with the user's category names, or monthly totals per spending category read from the user's Drive file (no email, names or notes), solely to return the result to the user, and we do not store it; (3) Google, which hosts the app, the user's Drive file and email delivery; (4) authorities, only where required by law.</li>
 <li>We do not sell Google user data, use it for advertising, or share it with anyone else. Humans do not read it except when the user sends it to us in a bug report, for security, or as required by law.</li>
 <li>We do not use, and do not allow our AI provider to use, Google user data (including data from Google Workspace APIs such as Google Drive) to develop, improve, or train generalized AI and/or ML models.</li>
 <li>Bedah Dompet's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</li>
